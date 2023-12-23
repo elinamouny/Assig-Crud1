@@ -82,16 +82,30 @@ function deleteProduct(index) {
     document.getElementById("updateBtn").classList.add('d-none');
   }
 
+ 
   function searchProduct() {
-    let searchTerm = document.getElementById("psearch").value.toLowerCase();
-  
-    // Filter products based on the search term
-    let filteredProducts = products.filter(product =>
-      product.name.toLowerCase().includes(searchTerm) ||
-      product.category.toLowerCase().includes(searchTerm) ||
-      product.description.toLowerCase().includes(searchTerm)
-    );
-  
-    // Update the table with the filtered products
-    updateTable(filteredProducts);
+    var searchValue = document.getElementById('psearch').value.toLowerCase();
+    var table = document.getElementById('productTableBody');
+    var rows = table.getElementsByTagName('tr');
+
+    for (var i = 0; i < rows.length; i++) {
+      var name = rows[i].getElementsByTagName('td')[1].innerText.toLowerCase();
+
+      if (name.includes(searchValue)) {
+        rows[i].style.display = '';
+      } else {
+        rows[i].style.display = 'none';
+      }
+    }
+  }
+  function validateForm() {
+    var productName = document.getElementById('pname').value;
+    var productPrice = document.getElementById('pprice').value;
+    var productCategory = document.getElementById('pcategory').value;
+
+    if (productName === '' || productPrice === '' || productCategory === '') {
+      alert('Please fill in all the required fields.');
+    } else {
+      AddProduct();
+    }
   }
